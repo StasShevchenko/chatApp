@@ -16,7 +16,15 @@ class AuthController {
     }
 
     async login(req, res, next) {
-
+        const {login, password} = req.query
+        if (!login || !password) {
+            return next(ApiError.badRequest('Некорректные данные'))
+        }
+        const candidate = await User.findOne({where: {login, password}})
+        if (!candidate) {
+            return next(ApiError.badRequest('Неправильные логин или пароль'))
+        }
+        return res.status(200).json({login: candidate.login, name: candidate.name})
     }
 
 }
