@@ -4,7 +4,6 @@ const {Op} = require("sequelize");
 
 class UsersController {
     async getUsers(req, res, next) {
-        console.log('ЗАПРОС ЮЗЕРОВ')
         const {userLogin} = req.query
         if (!userLogin) {
             next(ApiError.badRequest('Некорректные параметры запроса'))
